@@ -1,0 +1,356 @@
+/* ===== RESET & VARIABLES ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    /* Paleta Institucional IPN */
+    --ipn-guinda:      #7F1F3D;    /* Guinda Principal IPN */
+    --ipn-guinda-dim:  #4D1325;    /* Guinda Apagado */
+    --ipn-gold:        #C5A059;    /* Oro de Acento (Reemplaza Cyan) */
+    --ipn-gold-dim:    #9C824A;    /* Oro Apagado */
+    --ipn-cream:       #F0EAE0;    /* Crema/Hueso para Texto */
+
+    /* Estructura UI */
+    --bg:              #080808;    /* Fondo muy oscuro, casi negro */
+    --surface:         #1A0B0E;    /* Superficie Deep Guinda */
+    --border:          #3D1D24;    /* Borde Guinda Profundo */
+
+    --accent:          var(--ipn-gold);      /* Interacciones Principales */
+    --accent-dim:      var(--ipn-gold-dim);  /* Acentos apagados */
+    --primary:         var(--ipn-guinda);    /* Marca Institucional */
+
+    --text:            var(--ipn-cream);    /* Texto Principal */
+    --muted:           #9C9280;    /* Texto Mudo (Tono Oro-Marrón) */
+    --danger:          #AA2B2B;    /* Rojo Institucional para alertas */
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-body: 'DM Sans', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* ===== GRID BACKGROUND ===== */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    /* Patrón de rejilla sutil con tono Guinda */
+    background-image:
+            linear-gradient(rgba(127,31,61,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(127,31,61,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ===== HEADER ===== */
+header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.85); /* Fondo Guinda muy profundo */
+    backdrop-filter: blur(8px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent); /* Oro */
+}
+
+.logo-icon {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--accent); /* Borde Oro */
+    background: var(--primary); /* Fondo Guinda */
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+}
+
+/* ===== MAIN HERO ===== */
+main {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 3.5rem;
+}
+
+.hero {
+    text-align: center;
+    max-width: 680px;
+    animation: fadeUp 0.7s ease both;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--primary); /* Guinda */
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--ipn-guinda-dim);
+}
+
+.hero h1 {
+    font-family: var(--font-mono);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.hero h1 span {
+    color: var(--accent); /* Oro */
+}
+
+.hero p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ===== ACTION CARD ===== */
+.action-card {
+    width: 100%;
+    max-width: 580px;
+    background: var(--surface); /* Superficie Guinda Oscura */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 2.25rem;
+    animation: fadeUp 0.7s 0.15s ease both;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    /* Gradiente con Oro central */
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.card-section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+/* Upload zone */
+.upload-zone {
+    border: 1.5px dashed var(--border);
+    border-radius: 6px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 1.75rem;
+    position: relative;
+}
+
+.upload-zone:hover {
+    border-color: var(--accent-dim);
+    background: rgba(197,160,89,0.03); /* Fondo Oro muy sutil al hover */
+}
+
+.upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.upload-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary); /* Guinda */
+    display: block;
+}
+
+.upload-zone p {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+.upload-zone strong {
+    color: var(--accent); /* Oro */
+    font-weight: 500;
+}
+
+/* Model selectors */
+.model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.model-option {
+    position: relative;
+}
+
+.model-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+}
+
+.model-option label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+    background: rgba(8,8,8,0.3); /* Fondo oscuro base */
+}
+
+.model-option input:checked + label {
+    border-color: var(--accent); /* Oro */
+    background: rgba(127,31,61,0.1); /* Fondo Guinda suave al seleccionar */
+}
+
+.model-name {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text);
+    letter-spacing: 0.04em;
+}
+
+.model-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+.check-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent); /* Oro */
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+}
+
+.model-option input:checked ~ label .check-dot,
+.model-option input:checked + label .check-dot {
+    opacity: 1;
+}
+
+/* CTA Button */
+.btn-primary {
+    width: 100%;
+    padding: 0.85rem;
+    background: transparent;
+    border: 1.5px solid var(--accent); /* Borde Oro */
+    border-radius: 6px;
+    color: var(--accent); /* Texto Oro */
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    background: var(--primary); /* Fondo Guinda */
+    color: #fff; /* Texto blanco en hover */
+    border-color: var(--primary);
+    box-shadow: 0 0 24px rgba(127,31,61,0.3); /* Sombra Guinda */
+}
+
+.btn-primary:disabled {
+    border-color: var(--border);
+    color: var(--muted);
+    cursor: not-allowed;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    main { padding: 2.5rem 1.25rem; gap: 2.5rem; }
+    .action-card { padding: 1.5rem 1.25rem; }
+    .model-grid { grid-template-columns: 1fr; }
+}

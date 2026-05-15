@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DeepSight — UPIIZ IPN</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap"
+          rel="stylesheet"/>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="logo">
+        <div class="logo-icon">DS</div>
+        DeepSight
+    </div>
+    <span class="badge">UPIIZ · IPN · CAE v1.0</span>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+    <!-- Hero copy -->
+    <section class="hero">
+        <p class="hero-eyebrow">Análisis y Comprensión de Documentos</p>
+        <h1>Dataset <span>Reduction</span><br/>& Feature Extraction</h1>
+        <p>
+            Carga tu dataset de documentos o imágenes, selecciona los modelos de DeepSight
+            para comparar y evalúa el rendimiento de cada autoencoder convolucional
+            en la limpieza y extracción de características.
+        </p>
+    </section>
+
+    <!-- Action card -->
+    <section class="action-card">
+
+        <!-- Dataset upload -->
+        <p class="card-section-label">01 — Dataset</p>
+        <div class="upload-zone" id="uploadZone">
+            <input type="file"
+                   id="datasetInput"
+                   accept=".zip,.tar,.pgm,.png,.jpg"
+                   multiple
+                   onchange="handleFileSelect(event)"/>
+            <span class="upload-icon">⬆</span>
+            <p><strong>Arrastra o selecciona</strong> tu Dataset</p>
+            <p>Formatos aceptados: .zip · .tar · imágenes (.pgm, .png)</p>
+        </div>
+
+        <!-- Model selection -->
+        <p class="card-section-label">02 — Modelos DeepSight</p>
+        <div class="model-grid">
+
+            <div class="model-option">
+                <input type="checkbox" id="model-ae" value="autoencoder"
+                       onchange="updateSubmitState()"/>
+                <label for="model-ae">
+                    <span class="model-name">Autoencoder</span>
+                    <span class="model-desc">Reducción clásica por cuello de botella</span>
+                    <span class="check-dot"></span>
+                </label>
+            </div>
+
+            <div class="model-option">
+                <input type="checkbox" id="model-cae" value="conv-autoencoder"
+                       onchange="updateSubmitState()"/>
+                <label for="model-cae">
+                    <span class="model-name">DeepSight CAE</span>
+                    <span class="model-desc">Autoencoder convolucional profundo</span>
+                    <span class="check-dot"></span>
+                </label>
+            </div>
+
+            <div class="model-option">
+                <input type="checkbox" id="model-vae" value="vae"
+                       onchange="updateSubmitState()"/>
+                <label for="model-vae">
+                    <span class="model-name">VAE</span>
+                    <span class="model-desc">Variacional con espacio latente continuo</span>
+                    <span class="check-dot"></span>
+                </label>
+            </div>
+
+            <div class="model-option">
+                <input type="checkbox" id="model-unet" value="unet"
+                       onchange="updateSubmitState()"/>
+                <label for="model-unet">
+                    <span class="model-name">U-Net CAE</span>
+                    <span class="model-desc">Encoder-decoder con skip connections</span>
+                    <span class="check-dot"></span>
+                </label>
+            </div>
+
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-primary" id="submitBtn" disabled>
+            Iniciar Análisis Comparativo
+        </button>
+
+    </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    DeepSight &nbsp;·&nbsp; Instituto Politécnico Nacional &nbsp;·&nbsp; UPIIZ Campus Zacatecas
+    &nbsp;·&nbsp; Uso Investigativo
+</footer>
+
+<script>
+    let fileSelected = false;
+
+    function handleFileSelect(e) {
+        fileSelected = e.target.files.length > 0;
+        const zone = document.getElementById('uploadZone');
+        if (fileSelected) {
+            const name = e.target.files[0].name;
+            zone.querySelector('p:last-of-type').textContent = name;
+            zone.style.borderColor = 'var(--accent-dim)';
+        }
+        updateSubmitState();
+    }
+
+    function updateSubmitState() {
+        const anyModel = document.querySelectorAll('.model-option input:checked').length > 0;
+        document.getElementById('submitBtn').disabled = !(fileSelected && anyModel);
+    }
+</script>
+
+</body>
+</html>
